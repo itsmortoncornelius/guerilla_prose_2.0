@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Guerilla Prose</string>
+
+    <string name="create_guerilla_prose">Create</string>
+    <string name="list_guerilla_prose">List</string>
+    <string name="profile_guerilla_prose">Profile</string>
+
+    <string name="title_list">Guerilla Proses</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_create">Create Guerilla Prose</string>
+</resources>
