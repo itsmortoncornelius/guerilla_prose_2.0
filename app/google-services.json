@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "958792847117",
+    "firebase_url": "https://guerilla-prose.firebaseio.com",
+    "project_id": "guerilla-prose",
+    "storage_bucket": "guerilla-prose.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958792847117:android:57479ceb606ca3cb",
+        "android_client_info": {
+          "package_name": "de.handler.mobile.guerillaprose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958792847117-a2ednripm0llq7r64oujpi0cqe39sbps.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4VsHVrWqHo1CQNF1aFxIJjRnYeX4y5dg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

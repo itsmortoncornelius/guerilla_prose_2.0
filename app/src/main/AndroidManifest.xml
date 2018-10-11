@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.handler.mobile.guerillaprose">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+        android:name=".GuerillaProseApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
