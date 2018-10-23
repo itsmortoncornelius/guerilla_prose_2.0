@@ -8,15 +8,23 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_create.*
+import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.android.Main
 import org.koin.android.ext.android.inject
 import java.io.File
+import kotlin.coroutines.experimental.CoroutineContext
 
 class CreateFragment : Fragment() {
-    private val repository: GuerillaProseRepository by inject()
+    private val guerillaProseProvider: GuerillaProseProvider by inject()
+    private val guerillaProseRepository: GuerillaProseRepository by inject()
     private var file: File? = null
+
+    private val job = Job()
+    private val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -28,6 +36,33 @@ class CreateFragment : Fragment() {
 
         guerilla_image.setOnClickListener {
             openGallery()
+        }
+
+        sendGuerillaProseFab.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
+
+            createGuerillaProse(GuerillaProse(
+                    text = "There is so much beauty in the world",
+                    imageUrl = "http://4.bp.blogspot.com/-1lMLh4GjtKw/VavHUYZ6f8I/AAAAAAAAZHo/dPilDnabLiM/s1600/AB%2B11131103504_2e47079f32_b.jpg",
+                    label = "beauty",
+                    userId = "0"))
+
+            progressBar.visibility = View.GONE
+
+            fragmentManager?.popBackStack()
+        }
+    }
+
+    private fun createGuerillaProse(guerillaProse: GuerillaProse): Deferred<GuerillaProse?> {
+        return GlobalScope.async(coroutineContext) {
+            try {
+                val createdGuerillaProse = guerillaProseProvider.createGuerillaProse(guerillaProse).await()
+                guerillaProseRepository.getGuerillaProses()
+                return@async createdGuerillaProse
+            } catch (e: Exception) {
+                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+                return@async null
+            }
         }
     }
 
@@ -100,26 +135,28 @@ class CreateFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         val action = when (requestCode) {
-                    REQUEST_CODE_CAMERA_PERMISSION -> { granted: Boolean ->
-                        when (granted) {
-                            true -> openCamera()
-                            else -> PermissionManager.requestPermission(
-                                    activity!!,
-                                    Manifest.permission.CAMERA,
-                                    REQUEST_CODE_CAMERA_PERMISSION)
-                        }
-                    }
-                    REQUEST_CODE_STORAGE_GALLERY_PERMISSION -> { granted: Boolean ->
-                        when (granted) {
-                            true -> openGallery()
-                            else -> PermissionManager.requestPermission(
-                                    activity!!,
-                                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    REQUEST_CODE_STORAGE_GALLERY_PERMISSION)
-                        }
-                    }
-                    else -> { {} }
+            REQUEST_CODE_CAMERA_PERMISSION -> { granted: Boolean ->
+                when (granted) {
+                    true -> openCamera()
+                    else -> PermissionManager.requestPermission(
+                            activity!!,
+                            Manifest.permission.CAMERA,
+                            REQUEST_CODE_CAMERA_PERMISSION)
                 }
+            }
+            REQUEST_CODE_STORAGE_GALLERY_PERMISSION -> { granted: Boolean ->
+                when (granted) {
+                    true -> openGallery()
+                    else -> PermissionManager.requestPermission(
+                            activity!!,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            REQUEST_CODE_STORAGE_GALLERY_PERMISSION)
+                }
+            }
+            else -> {
+                {}
+            }
+        }
         PermissionManager.handlePermissionsResult(activity!!, grantResults, permissions, action)
     }
 
