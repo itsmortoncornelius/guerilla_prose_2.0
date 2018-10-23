@@ -1,14 +1,15 @@
-package de.handler.mobile.guerillaprose
+package de.handler.mobile.guerillaprose.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import de.handler.mobile.guerillaprose.R
 
-class ProfileFragment : Fragment() {
+class ShowProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        return inflater.inflate(R.layout.fragment_show_profile, container, false)
     }
 }

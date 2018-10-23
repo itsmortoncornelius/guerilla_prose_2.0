@@ -1,5 +1,6 @@
-package de.handler.mobile.guerillaprose
+package de.handler.mobile.guerillaprose.data
 
+import de.handler.mobile.guerillaprose.GuerillaProseApp
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 
@@ -11,6 +12,8 @@ object DependencyProvider {
         return module {
             single { GuerillaProseProvider() }
             single { GuerillaProseRepository(get()) }
+            single { UserProvider() }
+            single { UserRepository(get()) }
         }
     }
 }

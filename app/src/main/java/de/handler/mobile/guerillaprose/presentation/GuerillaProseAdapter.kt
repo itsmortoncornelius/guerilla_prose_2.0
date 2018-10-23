@@ -1,4 +1,4 @@
-package de.handler.mobile.guerillaprose
+package de.handler.mobile.guerillaprose.presentation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import de.handler.mobile.guerillaprose.R
+import de.handler.mobile.guerillaprose.data.GuerillaProse
+import de.handler.mobile.guerillaprose.loadUrl
 
 class GuerillaProseAdapter(private val picasso: Picasso) : ListAdapter<GuerillaProse, GuerillaProseAdapter.GuerillaProseViewHolder>(DiffItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuerillaProseViewHolder {
@@ -21,9 +24,9 @@ class GuerillaProseAdapter(private val picasso: Picasso) : ListAdapter<GuerillaP
         holder.bind(item)
     }
 
-    class GuerillaProseViewHolder(private val picasso: Picasso, itemView: View): RecyclerView.ViewHolder(itemView) {
-        private val guerillaImage = itemView.findViewById<ImageView>(R.id.guerilla_image)
-        private val guerillaText = itemView.findViewById<TextView>(R.id.guerilla_text)
+    class GuerillaProseViewHolder(private val picasso: Picasso, itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val guerillaImage = itemView.findViewById<ImageView>(R.id.proseImageView)
+        private val guerillaText = itemView.findViewById<TextView>(R.id.proseText)
 
         fun bind(guerillaProse: GuerillaProse?) {
             guerillaImage.loadUrl(picasso, guerillaProse?.imageUrl)
@@ -31,7 +34,7 @@ class GuerillaProseAdapter(private val picasso: Picasso) : ListAdapter<GuerillaP
         }
     }
 
-    class DiffItemCallback: DiffUtil.ItemCallback<GuerillaProse>() {
+    class DiffItemCallback : DiffUtil.ItemCallback<GuerillaProse>() {
         override fun areItemsTheSame(oldItem: GuerillaProse, newItem: GuerillaProse): Boolean {
             return oldItem.id == newItem.id
         }

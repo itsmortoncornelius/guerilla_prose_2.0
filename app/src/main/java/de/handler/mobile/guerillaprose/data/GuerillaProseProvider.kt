@@ -1,18 +1,24 @@
-package de.handler.mobile.guerillaprose
+package de.handler.mobile.guerillaprose.data
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.async
-import okhttp3.*
+import de.handler.mobile.guerillaprose.parseItem
+import kotlinx.coroutines.experimental.*
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 import timber.log.Timber
-import java.lang.reflect.Type
 import java.util.*
+import kotlin.coroutines.experimental.CoroutineContext
 
 
-class GuerillaProseProvider {
+class GuerillaProseProvider : CoroutineScope {
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.IO + job
+
     private val client = OkHttpClient().newBuilder().build()
     private val moshi =
             Moshi.Builder()
@@ -20,7 +26,7 @@ class GuerillaProseProvider {
                     .build()
 
     fun getGuerillaProses(): Deferred<List<GuerillaProse>?> {
-        return GlobalScope.async {
+        return async {
             try {
                 val request = Request.Builder().url("http://10.0.2.2:8080/guerillaProse").get().build()
                 val response = client.newCall(request).execute()
@@ -33,7 +39,7 @@ class GuerillaProseProvider {
     }
 
     fun createGuerillaProse(guerillaProse: GuerillaProse): Deferred<GuerillaProse?> {
-        return GlobalScope.async {
+        return async {
             try {
                 val jsonString = moshi.adapter<GuerillaProse>(
                         Types.newParameterizedType(GuerillaProse::class.java)).toJson(guerillaProse)
@@ -48,26 +54,6 @@ class GuerillaProseProvider {
                 Timber.e(e)
                 return@async null
             }
-        }
-    }
-
-
-
-    /**
-     * Extension that reads the BufferedSource response
-     * of the request and parses the assigned type.
-     *
-     * Derived & inspired from:
-     * https://github.com/ppamorim/okoshi/blob/master/okoshi/src/main/kotlin/com/okoshi/Okoshi.kt
-     */
-    private fun <T> Response.parseItem(
-            moshi: Moshi,
-            type: Type): T? {
-        return if (isSuccessful) {
-            body()?.let { moshi.adapter<T>(type).fromJson(it.source()) }
-        } else {
-            Timber.e("error while parsing json with code ${code()}")
-            null
         }
     }
 }

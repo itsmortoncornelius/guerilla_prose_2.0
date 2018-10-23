@@ -22,28 +22,28 @@
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
-            android:id="@+id/guerilla_image"
+            android:id="@+id/proseImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/guerilla_text"
+            app:layout_constraintBottom_toTopOf="@id/proseText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic"/>
 
         <TextView
-            android:id="@+id/guerilla_text"
+            android:id="@+id/proseText"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guerilla_image"
+            app:layout_constraintTop_toBottomOf="@+id/proseImageView"
             tools:text="@string/example_text"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/sendGuerillaProseFab"
+            android:id="@+id/sendProseFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

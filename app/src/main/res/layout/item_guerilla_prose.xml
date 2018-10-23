@@ -4,32 +4,37 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_cards"
+    android:layout_height="@dimen/prose_card_height"
     app:cardCornerRadius="@dimen/guerilla_card_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp">
 
         <ImageView
-            android:id="@+id/guerilla_image"
+            android:id="@+id/proseImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/guerilla_text"
+            app:layout_constraintHeight_percent="0.7"
+            android:layout_marginBottom="@dimen/vertical_margin"
+            app:layout_constraintBottom_toTopOf="@id/proseText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic"/>
 
         <TextView
-            android:id="@+id/guerilla_text"
+            android:id="@+id/proseText"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/guerilla_image"
+            app:layout_constraintTop_toBottomOf="@+id/proseImageView"
             tools:text="@string/example_text"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

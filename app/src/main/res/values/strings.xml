@@ -9,4 +9,11 @@
     <string name="title_profile">Profile</string>
     <string name="title_create">Create Guerilla Prose</string>
     <string name="example_text">As I mentioned before, the action has an id and we can see from the code snippets above that in the navController.navigate call we pass that id. That is how the navigation takes into account all the attributes specified, such as transitions and arguments. Just for the sake of trying, we can replace R.id.openNotificationDetailsAction with R.id.notificationDetails. The navigation will still be able to open the details fragment because in the navigation graph that fragment is defined with R.id.notificationDetails id. However, there will be no transition.</string>
+    <string name="hint_email">enter email</string>
+    <string name="hint_last_name">enter last name</string>
+    <string name="hint_first_name">enter first name</string>
+    <string name="text_guest">GUEST</string>
+    <string name="text_create">CREATE</string>
+    <string name="title_create_profile">Create Profile</string>
+    <string name="text_no_data">You don\'t have any Guerilla Prose written yet</string>
 </resources>

@@ -1,7 +1,7 @@
-package de.handler.mobile.guerillaprose
+package de.handler.mobile.guerillaprose.data
 
 data class GuerillaProse(
-        val id: String = "",
+        val id: String = "0",
         val text: String?,
         val imageUrl: String?,
         val label: String,

@@ -1,4 +1,4 @@
-package de.handler.mobile.guerillaprose
+package de.handler.mobile.guerillaprose.presentation
 
 import android.Manifest
 import android.app.Activity
@@ -11,59 +11,66 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_create.*
-import kotlinx.coroutines.experimental.*
+import de.handler.mobile.guerillaprose.BuildConfig
+import de.handler.mobile.guerillaprose.R
+import de.handler.mobile.guerillaprose.data.*
+import kotlinx.android.synthetic.main.fragment_create_prose.*
+import kotlinx.coroutines.experimental.CoroutineScope
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.Main
+import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
 import java.io.File
 import kotlin.coroutines.experimental.CoroutineContext
 
-class CreateFragment : Fragment() {
+class CreateProseFragment : Fragment(), CoroutineScope {
     private val guerillaProseProvider: GuerillaProseProvider by inject()
     private val guerillaProseRepository: GuerillaProseRepository by inject()
+    private val userRepository: UserRepository by inject()
+
     private var file: File? = null
 
     private val job = Job()
-    private val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_create, container, false)
+        return inflater.inflate(R.layout.fragment_create_prose, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        guerilla_image.setOnClickListener {
+        proseImageView.setOnClickListener {
             openGallery()
         }
 
-        sendGuerillaProseFab.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-
-            createGuerillaProse(GuerillaProse(
-                    text = "There is so much beauty in the world",
-                    imageUrl = "http://4.bp.blogspot.com/-1lMLh4GjtKw/VavHUYZ6f8I/AAAAAAAAZHo/dPilDnabLiM/s1600/AB%2B11131103504_2e47079f32_b.jpg",
-                    label = "beauty",
-                    userId = "0"))
-
-            progressBar.visibility = View.GONE
-
-            fragmentManager?.popBackStack()
+        sendProseFab.setOnClickListener {
+            userRepository.user?.id?.let { userId ->
+                createGuerillaProseAndNavigate(GuerillaProse(
+                        text = "There is so much beauty in the world",
+                        imageUrl = "http://4.bp.blogspot.com/-1lMLh4GjtKw/VavHUYZ6f8I/AAAAAAAAZHo/dPilDnabLiM/s1600/AB%2B11131103504_2e47079f32_b.jpg",
+                        label = "beauty",
+                        userId = userId))
+            }
         }
     }
 
-    private fun createGuerillaProse(guerillaProse: GuerillaProse): Deferred<GuerillaProse?> {
-        return GlobalScope.async(coroutineContext) {
-            try {
-                val createdGuerillaProse = guerillaProseProvider.createGuerillaProse(guerillaProse).await()
-                guerillaProseRepository.getGuerillaProses()
-                return@async createdGuerillaProse
-            } catch (e: Exception) {
-                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                return@async null
-            }
+    private fun createGuerillaProseAndNavigate(guerillaProse: GuerillaProse) = launch {
+        progressBar.visibility = View.VISIBLE
+
+        try {
+            guerillaProseProvider.createGuerillaProse(guerillaProse).await()
+            guerillaProseRepository.getGuerillaProses()
+        } catch (e: Exception) {
+            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
         }
+
+        progressBar.visibility = View.GONE
+        fragmentManager?.popBackStack()
     }
 
     private fun openGallery() {

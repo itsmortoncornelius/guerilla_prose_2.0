@@ -1,4 +1,4 @@
-package de.handler.mobile.guerillaprose
+package de.handler.mobile.guerillaprose.presentation
 
 import android.content.Context
 import android.content.pm.PackageManager

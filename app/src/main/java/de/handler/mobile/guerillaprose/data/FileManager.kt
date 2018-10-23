@@ -1,4 +1,4 @@
-package de.handler.mobile.guerillaprose
+package de.handler.mobile.guerillaprose.data
 
 import android.content.ContentResolver
 import android.content.Context
@@ -11,8 +11,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object FileManager {
-
-
     fun createFile(context: Context, suffix: String): File? {
         return try {
             val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())

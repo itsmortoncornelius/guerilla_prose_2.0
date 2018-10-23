@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/actionList"
+        android:id="@+id/actionListProse"
         android:icon="@drawable/ic_view_list"
         android:title="@string/list_guerilla_prose"/>
 

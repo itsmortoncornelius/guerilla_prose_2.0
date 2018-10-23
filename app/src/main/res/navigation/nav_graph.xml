@@ -3,33 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/actionList">
+    app:startDestination="@id/actionListProse">
 
     <fragment
-        android:id="@+id/actionProfile"
-        android:name="de.handler.mobile.guerillaprose.ProfileFragment"
+        android:id="@+id/actionShowProfile"
+        android:name="de.handler.mobile.guerillaprose.presentation.ShowProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_show_profile"/>
+
     <fragment
-        android:id="@+id/actionList"
-        android:name="de.handler.mobile.guerillaprose.ListFragment"
+        android:id="@+id/actionListProse"
+        android:name="de.handler.mobile.guerillaprose.presentation.ListProseFragment"
         android:label="@string/title_list"
-        tools:layout="@layout/fragment_list">
+        tools:layout="@layout/fragment_list_prose">
 
         <action
             android:id="@+id/createGuerillaProse"
-            app:destination="@id/actionCreate"
+            app:destination="@id/actionCreateProse"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/actionList"/>
+            app:popUpTo="@+id/actionListProse"/>
 
     </fragment>
+
     <fragment
-        android:id="@+id/actionCreate"
-        android:name="de.handler.mobile.guerillaprose.CreateFragment"
+        android:id="@+id/actionCreateProse"
+        android:name="de.handler.mobile.guerillaprose.presentation.CreateProseFragment"
         android:label="@string/title_create"
-        tools:layout="@layout/fragment_create"/>
+        tools:layout="@layout/fragment_create_prose"/>
+
+    <fragment
+        android:id="@+id/actionCreateProfile"
+        android:name="de.handler.mobile.guerillaprose.presentation.CreateProfileFragment"
+        android:label="@string/title_create_profile"
+        tools:layout="@layout/fragment_create_profile">
+
+        <action
+            android:id="@+id/showGuerillaProses"
+            app:destination="@id/actionListProse"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpTo="@+id/actionListProse"/>
+
+    </fragment>
 
 </navigation>
