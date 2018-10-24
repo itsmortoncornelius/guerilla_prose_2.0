@@ -2,7 +2,6 @@ package de.handler.mobile.guerillaprose.data
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import de.handler.mobile.guerillaprose.parseItem
 import kotlinx.coroutines.experimental.*
 import okhttp3.MediaType
@@ -10,20 +9,13 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import timber.log.Timber
-import java.util.*
 import kotlin.coroutines.experimental.CoroutineContext
 
 
-class GuerillaProseProvider : CoroutineScope {
+class GuerillaProseProvider(val client: OkHttpClient, val moshi: Moshi) : CoroutineScope {
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job
-
-    private val client = OkHttpClient().newBuilder().build()
-    private val moshi =
-            Moshi.Builder()
-                    .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
-                    .build()
 
     fun getGuerillaProses(): Deferred<List<GuerillaProse>?> {
         return async {
