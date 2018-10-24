@@ -3,6 +3,7 @@ package de.handler.mobile.guerillaprose.presentation
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -11,9 +12,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import com.squareup.picasso.Picasso
 import de.handler.mobile.guerillaprose.BuildConfig
 import de.handler.mobile.guerillaprose.R
 import de.handler.mobile.guerillaprose.data.*
+import de.handler.mobile.guerillaprose.loadUrl
 import kotlinx.android.synthetic.main.fragment_create_prose.*
 import kotlinx.coroutines.experimental.CoroutineScope
 import kotlinx.coroutines.experimental.Dispatchers
@@ -26,9 +30,12 @@ import kotlin.coroutines.experimental.CoroutineContext
 
 class CreateProseFragment : Fragment(), CoroutineScope {
     private val guerillaProseRepository: GuerillaProseRepository by inject()
+    private val flickrRepository: FlickrRepository by inject()
     private val userRepository: UserRepository by inject()
+    private val picasso: Picasso by inject()
 
     private var file: File? = null
+    private var flickrInfo: FlickrInfo? = null
 
     private val job = Job()
 
@@ -47,14 +54,29 @@ class CreateProseFragment : Fragment(), CoroutineScope {
             // openGallery()
             openCamera()
         }
+
+        flickrRepository.getRandomFlickrImages("street art").observe(this, Observer {
+            flickrInfo = it.shuffled().firstOrNull()
+            proseImageView.loadUrl(picasso, flickrInfo?.imageUrl)
+            textViewAuthor.text = getString(R.string.text_image_copyright, flickrInfo?.owner)
+        })
+
+        textViewAuthor.setOnClickListener {
+            if (flickrInfo?.ownerUrl?.isEmpty() == true) return@setOnClickListener
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(flickrInfo?.ownerUrl))
+            activity?.packageManager?.let { packageManager ->
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            }
         }
 
         sendProseFab.setOnClickListener {
             userRepository.user?.id?.let { userId ->
                 createGuerillaProseAndNavigate(GuerillaProse(
-                        text = "There is so much beauty in the world",
-                        imageUrl = "http://4.bp.blogspot.com/-1lMLh4GjtKw/VavHUYZ6f8I/AAAAAAAAZHo/dPilDnabLiM/s1600/AB%2B11131103504_2e47079f32_b.jpg",
-                        label = "beauty",
+                        text = proseText.text.toString(),
+                        imageUrl = flickrInfo?.imageUrl,
+                        label = "street art",
                         userId = userId))
             }
         }

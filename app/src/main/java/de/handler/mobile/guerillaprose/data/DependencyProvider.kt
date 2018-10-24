@@ -24,6 +24,8 @@ object DependencyProvider {
             single { GuerillaProseRepository(get()) }
             single { UserProvider(get(), get()) }
             single { UserRepository(get()) }
+            single { FlickrProvider(get(), get()) }
+            single { FlickrRepository(get()) }
         }
     }
 }
