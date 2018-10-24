@@ -20,8 +20,9 @@ object DependencyProvider {
             single { Moshi.Builder()
                     .add(Date::class.java, Rfc3339DateJsonAdapter().nullSafe())
                     .build() }
+            single { GuerillaFileProvider(get(), get()) }
             single { GuerillaProseProvider(get(), get()) }
-            single { GuerillaProseRepository(get()) }
+            single { GuerillaProseRepository(get(), get()) }
             single { UserProvider(get(), get()) }
             single { UserRepository(get()) }
             single { FlickrProvider(get(), get()) }

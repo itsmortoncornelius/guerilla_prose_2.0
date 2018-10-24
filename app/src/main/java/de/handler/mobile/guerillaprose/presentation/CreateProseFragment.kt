@@ -77,6 +77,7 @@ class CreateProseFragment : Fragment(), CoroutineScope {
         }
 
         sendProseFab.setOnClickListener {
+            val image = guerillaProseRepository.uploadImage(file)
             userRepository.user?.id?.let { userId ->
                 createGuerillaProseAndNavigate(GuerillaProse(
                         text = proseText.text.toString(),

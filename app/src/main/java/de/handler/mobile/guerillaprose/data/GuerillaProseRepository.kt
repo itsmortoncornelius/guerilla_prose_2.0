@@ -3,10 +3,12 @@ package de.handler.mobile.guerillaprose.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.experimental.*
+import java.io.File
 import kotlin.coroutines.experimental.CoroutineContext
 
 
-class GuerillaProseRepository(private val provider: GuerillaProseProvider): CoroutineScope {
+class GuerillaProseRepository(private val guerillaProseProvider: GuerillaProseProvider,
+                              private val fileProvider: GuerillaFileProvider): CoroutineScope {
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job
@@ -15,7 +17,7 @@ class GuerillaProseRepository(private val provider: GuerillaProseProvider): Coro
 
     fun getGuerillaProses(): LiveData<List<GuerillaProse?>> {
         launch {
-            val guerillaProses = provider.getGuerillaProses().await().orEmpty()
+            val guerillaProses = guerillaProseProvider.getGuerillaProses().await().orEmpty()
             guerillaProsesLiveData.postValue(guerillaProses)
         }
 
@@ -24,9 +26,15 @@ class GuerillaProseRepository(private val provider: GuerillaProseProvider): Coro
 
     fun createGuerillaProse(guerillaProse: GuerillaProse): Deferred<GuerillaProse?> {
         return async {
-            val createdGuerillaProse = provider.createGuerillaProse(guerillaProse).await()
+            val createdGuerillaProse = guerillaProseProvider.createGuerillaProse(guerillaProse).await()
             getGuerillaProses()
             return@async createdGuerillaProse
+        }
+    }
+
+    fun uploadImage(file: File?): Deferred<FileInfo?> {
+        return async {
+            return@async file?.let { fileProvider.uploadFile(file) }?.await()
         }
     }
 }
