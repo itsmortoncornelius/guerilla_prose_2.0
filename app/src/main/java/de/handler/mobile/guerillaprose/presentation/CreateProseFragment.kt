@@ -25,7 +25,6 @@ import java.io.File
 import kotlin.coroutines.experimental.CoroutineContext
 
 class CreateProseFragment : Fragment(), CoroutineScope {
-    private val guerillaProseProvider: GuerillaProseProvider by inject()
     private val guerillaProseRepository: GuerillaProseRepository by inject()
     private val userRepository: UserRepository by inject()
 
@@ -45,7 +44,9 @@ class CreateProseFragment : Fragment(), CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
 
         proseImageView.setOnClickListener {
-            openGallery()
+            // openGallery()
+            openCamera()
+        }
         }
 
         sendProseFab.setOnClickListener {
@@ -63,8 +64,7 @@ class CreateProseFragment : Fragment(), CoroutineScope {
         progressBar.visibility = View.VISIBLE
 
         try {
-            guerillaProseProvider.createGuerillaProse(guerillaProse).await()
-            guerillaProseRepository.getGuerillaProses()
+            guerillaProseRepository.createGuerillaProse(guerillaProse).await()
         } catch (e: Exception) {
             Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
         }
@@ -79,8 +79,8 @@ class CreateProseFragment : Fragment(), CoroutineScope {
         if (PermissionManager.permissionPending(
                         activity!!,
                         Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            PermissionManager.requestPermission(
-                    activity!!,
+            PermissionManager.requestPermissions(
+                    this,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     REQUEST_CODE_STORAGE_GALLERY_PERMISSION)
         } else {
@@ -97,8 +97,8 @@ class CreateProseFragment : Fragment(), CoroutineScope {
         if (PermissionManager.permissionPending(
                         activity!!,
                         Manifest.permission.CAMERA)) {
-            PermissionManager.requestPermission(
-                    activity!!,
+            PermissionManager.requestPermissions(
+                    this,
                     Manifest.permission.CAMERA,
                     REQUEST_CODE_CAMERA_PERMISSION)
         } else {
@@ -126,7 +126,6 @@ class CreateProseFragment : Fragment(), CoroutineScope {
 
     private fun parseGalleryResult(data: Intent?) {
         file = activity?.contentResolver?.let { FileManager.resolveFileFromIntent(it, data) }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -139,8 +138,6 @@ class CreateProseFragment : Fragment(), CoroutineScope {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         val action = when (requestCode) {
             REQUEST_CODE_CAMERA_PERMISSION -> { granted: Boolean ->
                 when (granted) {
@@ -154,8 +151,8 @@ class CreateProseFragment : Fragment(), CoroutineScope {
             REQUEST_CODE_STORAGE_GALLERY_PERMISSION -> { granted: Boolean ->
                 when (granted) {
                     true -> openGallery()
-                    else -> PermissionManager.requestPermission(
-                            activity!!,
+                    else -> PermissionManager.requestPermissions(
+                            this,
                             Manifest.permission.READ_EXTERNAL_STORAGE,
                             REQUEST_CODE_STORAGE_GALLERY_PERMISSION)
                 }
@@ -170,7 +167,7 @@ class CreateProseFragment : Fragment(), CoroutineScope {
     companion object {
         private const val REQUEST_CODE_CAMERA: Int = 942
         private const val REQUEST_CODE_GALLERY: Int = 933
-        private const val REQUEST_CODE_CAMERA_PERMISSION: Int = 924
-        private const val REQUEST_CODE_STORAGE_GALLERY_PERMISSION: Int = 915
+        const val REQUEST_CODE_CAMERA_PERMISSION: Int = 924
+        const val REQUEST_CODE_STORAGE_GALLERY_PERMISSION: Int = 915
     }
 }

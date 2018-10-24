@@ -16,4 +16,6 @@
     <string name="text_create">CREATE</string>
     <string name="title_create_profile">Create Profile</string>
     <string name="text_no_data">You don\'t have any Guerilla Prose written yet</string>
+    <string name="hint_prose_text">Enter your guerilla prose text</string>
+    <string name="text_image_copyright">Copyright by %s</string>
 </resources>
