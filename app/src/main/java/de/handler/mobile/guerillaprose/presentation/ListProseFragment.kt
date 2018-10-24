@@ -33,10 +33,10 @@ class ListProseFragment : Fragment() {
 
         repository.getGuerillaProses().observe(this, Observer {
             if (it.isEmpty()) {
-                emptyView.visibility = View.VISIBLE
+                empty_view_group.visibility = View.VISIBLE
                 recyclerView.visibility = View.GONE
             } else {
-                emptyView.visibility = View.GONE
+                empty_view_group.visibility = View.GONE
                 recyclerView.visibility = View.VISIBLE
             }
 
