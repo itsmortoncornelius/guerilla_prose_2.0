@@ -62,7 +62,7 @@ class CreateProseFragment : Fragment(), CoroutineScope {
 
         flickrRepository.getRandomFlickrImages("street art").observe(this, Observer {
             flickrInfo = it.shuffled().firstOrNull()
-            proseImageView.loadUrl(picasso, flickrInfo?.imageUrl)
+            proseImageView.loadUrl(picasso, flickrInfo?.imageUrl, height = 800)
             textViewAuthor.text = getString(R.string.text_image_copyright, flickrInfo?.owner)
         })
 

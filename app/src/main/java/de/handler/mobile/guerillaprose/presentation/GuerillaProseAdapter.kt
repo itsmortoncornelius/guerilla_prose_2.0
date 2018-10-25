@@ -13,6 +13,8 @@ import de.handler.mobile.guerillaprose.R
 import de.handler.mobile.guerillaprose.data.GuerillaProse
 import de.handler.mobile.guerillaprose.loadUrl
 
+
+
 class GuerillaProseAdapter(private val picasso: Picasso) : ListAdapter<GuerillaProse, GuerillaProseAdapter.GuerillaProseViewHolder>(DiffItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GuerillaProseViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_guerilla_prose, parent, false)
@@ -29,7 +31,7 @@ class GuerillaProseAdapter(private val picasso: Picasso) : ListAdapter<GuerillaP
         private val guerillaText = itemView.findViewById<TextView>(R.id.proseText)
 
         fun bind(guerillaProse: GuerillaProse?) {
-            guerillaImage.loadUrl(picasso, guerillaProse?.imageUrl)
+            guerillaImage.loadUrl(picasso, guerillaProse?.imageUrl, height = 350)
             guerillaText.text = guerillaProse?.text
         }
     }
