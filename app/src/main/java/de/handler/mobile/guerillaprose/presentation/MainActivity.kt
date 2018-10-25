@@ -3,7 +3,7 @@ package de.handler.mobile.guerillaprose.presentation
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -21,6 +21,7 @@ import kotlin.coroutines.experimental.CoroutineContext
 class MainActivity : AppCompatActivity(), CoroutineScope {
     private val job = Job()
     private val userRepository: UserRepository by inject()
+    private lateinit var navController: NavController
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
@@ -32,8 +33,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setupUser()
     }
 
+
     private fun setupNavigation() {
-        val navController = findNavController(R.id.mainNavigationFragment)
+        navController = findNavController(R.id.mainNavigationFragment)
         setupActionBarWithNavController(this, navController)
         bottomNavigationView.setupWithNavController(navController)
     }
@@ -43,22 +45,21 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         val userId = sharedPreferences.getString(KEY_USER_ID, null)
         if (userId.isNullOrEmpty()) {
-            findNavController(this, R.id.mainNavigationFragment)
-                    .navigate(R.id.actionCreateProfile)
+            navController.navigate(R.id.actionCreateProfile)
         } else {
             userId?.let {
                 launch {
-                    userRepository.getUser(it).await()
-                    findNavController(this@MainActivity, R.id.mainNavigationFragment)
-                            .navigate(R.id.actionListProse)
+                    val user = userRepository.getUser(it).await()
+                    when(user) {
+                        null -> navController.navigate(R.id.actionCreateProfile)
+                        else -> navController.navigate(R.id.actionListProse)
+                    }
                 }
             }
         }
     }
 
-    override fun onSupportNavigateUp() =
-            findNavController(this, R.id.mainNavigationFragment)
-                    .navigateUp()
+    override fun onSupportNavigateUp() = navController.navigateUp()
 
     companion object {
         const val KEY_USER_ID = "key_user_id"

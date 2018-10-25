@@ -20,8 +20,7 @@ class UserRepository(private val provider: UserProvider): CoroutineScope {
 
     fun getUser(id: String): Deferred<User?> {
         return async {
-            user = provider.getUser(id).await()
-            return@async user
+            return@async provider.getUser(id).await()
         }
     }
 }
