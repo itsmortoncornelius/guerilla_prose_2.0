@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
@@ -82,25 +83,39 @@ class CreateProseFragment : Fragment(), CoroutineScope {
                 val fileInfo: FileInfo? = if (file != null) {
                     guerillaProseRepository.uploadImage(file!!).await()
                 } else {
-                    flickrInfo?.imageUrl?.let { it1 -> FileInfo(url = it1, name = "") }
+                    val bitmap = (proseImageView.drawable as? BitmapDrawable)?.bitmap
+                    if (bitmap != null) {
+                        guerillaProseRepository.uploadImage(bitmap, "${flickrInfo?.imageTitle}.jpg").await()
+                    } else {
+                        flickrInfo?.imageUrl?.let { url -> FileInfo(url) }
+                    }
                 }
 
                 val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
                 val userId = sharedPreferences.getString(MainActivity.KEY_USER_ID, null)
+                if (userId == null) {
+                    restartRegistration()
+                    return@launch
+                }
+
                 val user = userRepository.getUser(userId).await()
                 if (user?.id.isNullOrBlank()) {
-                    Timber.e("No user is set")
-                    val navController = view.findNavController()
-                    navController.navigate(R.id.actionCreateProfile)
+                    restartRegistration()
                 } else {
                     createGuerillaProseAndNavigate(GuerillaProse(
                             text = proseText.text.toString(),
                             imageUrl = fileInfo?.url,
                             label = "street art",
-                            userId = userRepository.user?.id!!))
+                            userId = user?.id!!))
                 }
             }
         }
+    }
+
+    private fun restartRegistration() {
+        Timber.e("No user is set")
+        val navController = view?.findNavController()
+        navController?.navigate(R.id.actionCreateProfile)
     }
 
     private fun createGuerillaProseAndNavigate(guerillaProse: GuerillaProse) = launch {

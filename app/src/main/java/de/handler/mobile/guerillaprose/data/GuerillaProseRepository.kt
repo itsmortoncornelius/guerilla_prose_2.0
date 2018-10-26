@@ -1,5 +1,6 @@
 package de.handler.mobile.guerillaprose.data
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.experimental.*
@@ -34,5 +35,9 @@ class GuerillaProseRepository(private val guerillaProseProvider: GuerillaProsePr
 
     fun uploadImage(file: File): Deferred<FileInfo?> {
         return fileProvider.uploadFile(file)
+    }
+
+    fun uploadImage(bitmap: Bitmap, name: String): Deferred<FileInfo?> {
+        return fileProvider.uploadFile(bitmap, name)
     }
 }

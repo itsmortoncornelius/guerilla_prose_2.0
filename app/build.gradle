@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+def backendUri = 'BACKEND_URI'
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -11,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", backendUri, "\"http://10.0.2.2:8080/\""
     }
     buildTypes {
         release {

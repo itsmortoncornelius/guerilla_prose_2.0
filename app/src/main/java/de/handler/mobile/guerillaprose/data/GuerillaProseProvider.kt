@@ -2,6 +2,7 @@ package de.handler.mobile.guerillaprose.data
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
+import de.handler.mobile.guerillaprose.BuildConfig
 import de.handler.mobile.guerillaprose.parseItem
 import kotlinx.coroutines.experimental.*
 import okhttp3.MediaType
@@ -20,7 +21,7 @@ class GuerillaProseProvider(val client: OkHttpClient, val moshi: Moshi) : Corout
     fun getGuerillaProses(): Deferred<List<GuerillaProse>?> {
         return async {
             try {
-                val request = Request.Builder().url("http://10.0.2.2:8080/guerillaProse").get().build()
+                val request = Request.Builder().url("${BuildConfig.BACKEND_URI}guerillaProse").get().build()
                 val response = client.newCall(request).execute()
                 return@async response.parseItem<List<GuerillaProse>>(moshi, Types.newParameterizedType(List::class.java, GuerillaProse::class.java))
             } catch (e: Exception) {
@@ -39,7 +40,7 @@ class GuerillaProseProvider(val client: OkHttpClient, val moshi: Moshi) : Corout
                 val requestBody = RequestBody.create(
                         MediaType.parse("application/json"),
                         jsonString)
-                val request = Request.Builder().url("http://10.0.2.2:8080/guerillaProse").post(requestBody).build()
+                val request = Request.Builder().url("${BuildConfig.BACKEND_URI}guerillaProse").post(requestBody).build()
                 val response = client.newCall(request).execute()
                 return@async response.parseItem<GuerillaProse>(moshi, Types.newParameterizedType(GuerillaProse::class.java))
             } catch (e: Exception) {

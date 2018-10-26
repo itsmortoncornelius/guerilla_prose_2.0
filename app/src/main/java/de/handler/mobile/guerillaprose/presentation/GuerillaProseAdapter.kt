@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import de.handler.mobile.guerillaprose.BuildConfig
 import de.handler.mobile.guerillaprose.R
 import de.handler.mobile.guerillaprose.data.GuerillaProse
 import de.handler.mobile.guerillaprose.loadUrl
@@ -31,7 +32,7 @@ class GuerillaProseAdapter(private val picasso: Picasso) : ListAdapter<GuerillaP
         private val guerillaText = itemView.findViewById<TextView>(R.id.proseText)
 
         fun bind(guerillaProse: GuerillaProse?) {
-            guerillaImage.loadUrl(picasso, guerillaProse?.imageUrl, height = 350)
+            guerillaImage.loadUrl(picasso, "${BuildConfig.BACKEND_URI}${guerillaProse?.imageUrl}", height = 350)
             guerillaText.text = guerillaProse?.text
         }
     }
