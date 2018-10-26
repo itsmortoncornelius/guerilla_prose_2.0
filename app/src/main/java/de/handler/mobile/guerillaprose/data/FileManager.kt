@@ -18,9 +18,9 @@ object FileManager {
             val storageDir = context.filesDir
             val image: File? = try {
                 File.createTempFile(
-                        imageFileName, /* prefix */
-                        suffix, /* suffix */
-                        storageDir)   /* directory */
+                        imageFileName,  /* prefix */
+                        suffix,         /* suffix */
+                        storageDir)     /* directory */
             } catch (e: Exception) {
                 null
             }

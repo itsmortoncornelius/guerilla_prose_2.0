@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_margin="@dimen/margin_cards"
     android:layout_height="@dimen/prose_card_height"
+    android:layout_margin="@dimen/margin_cards"
     app:cardCornerRadius="@dimen/guerilla_card_corner_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,10 +18,10 @@
             android:id="@+id/proseImageView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.7"
             android:layout_marginBottom="@dimen/vertical_margin"
             app:layout_constraintBottom_toTopOf="@id/proseText"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.7"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic"/>
