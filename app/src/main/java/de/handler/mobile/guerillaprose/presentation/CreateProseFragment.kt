@@ -9,15 +9,15 @@ import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import com.squareup.picasso.Picasso
 import de.handler.mobile.guerillaprose.BuildConfig
 import de.handler.mobile.guerillaprose.R
@@ -30,6 +30,7 @@ import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.Main
 import kotlinx.coroutines.experimental.launch
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 import java.io.File
 import kotlin.coroutines.experimental.CoroutineContext
 
@@ -77,13 +78,27 @@ class CreateProseFragment : Fragment(), CoroutineScope {
         }
 
         sendProseFab.setOnClickListener {
-            val image = guerillaProseRepository.uploadImage(file)
-            userRepository.user?.id?.let { userId ->
-                createGuerillaProseAndNavigate(GuerillaProse(
-                        text = proseText.text.toString(),
-                        imageUrl = flickrInfo?.imageUrl,
-                        label = "street art",
-                        userId = userId))
+            launch {
+                val fileInfo: FileInfo? = if (file != null) {
+                    guerillaProseRepository.uploadImage(file!!).await()
+                } else {
+                    flickrInfo?.imageUrl?.let { it1 -> FileInfo(url = it1, name = "") }
+                }
+
+                val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+                val userId = sharedPreferences.getString(MainActivity.KEY_USER_ID, null)
+                val user = userRepository.getUser(userId).await()
+                if (user?.id.isNullOrBlank()) {
+                    Timber.e("No user is set")
+                    val navController = view.findNavController()
+                    navController.navigate(R.id.actionCreateProfile)
+                } else {
+                    createGuerillaProseAndNavigate(GuerillaProse(
+                            text = proseText.text.toString(),
+                            imageUrl = fileInfo?.url,
+                            label = "street art",
+                            userId = userRepository.user?.id!!))
+                }
             }
         }
     }
@@ -91,11 +106,7 @@ class CreateProseFragment : Fragment(), CoroutineScope {
     private fun createGuerillaProseAndNavigate(guerillaProse: GuerillaProse) = launch {
         progressBar.visibility = View.VISIBLE
 
-        try {
-            guerillaProseRepository.createGuerillaProse(guerillaProse).await()
-        } catch (e: Exception) {
-            Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-        }
+        guerillaProseRepository.createGuerillaProse(guerillaProse).await()
 
         progressBar.visibility = View.GONE
         fragmentManager?.popBackStack()
@@ -237,7 +248,7 @@ class CreateProseFragment : Fragment(), CoroutineScope {
 
             Bitmap.createBitmap(bitmap, 0, 0, options.outWidth, options.outHeight, matrix, true)
         } catch (e: Exception) {
-            Log.e(javaClass.name, e.message)
+            Timber.e(e)
             null
         }
     }

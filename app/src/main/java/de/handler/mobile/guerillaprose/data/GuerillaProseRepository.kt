@@ -27,14 +27,12 @@ class GuerillaProseRepository(private val guerillaProseProvider: GuerillaProsePr
     fun createGuerillaProse(guerillaProse: GuerillaProse): Deferred<GuerillaProse?> {
         return async {
             val createdGuerillaProse = guerillaProseProvider.createGuerillaProse(guerillaProse).await()
-            getGuerillaProses()
+            guerillaProseProvider.getGuerillaProses().await().orEmpty()
             return@async createdGuerillaProse
         }
     }
 
-    fun uploadImage(file: File?): Deferred<FileInfo?> {
-        return async {
-            return@async file?.let { fileProvider.uploadFile(file) }?.await()
-        }
+    fun uploadImage(file: File): Deferred<FileInfo?> {
+        return fileProvider.uploadFile(file)
     }
 }

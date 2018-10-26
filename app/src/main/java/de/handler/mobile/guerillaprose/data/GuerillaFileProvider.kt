@@ -4,10 +4,8 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.handler.mobile.guerillaprose.parseItem
 import kotlinx.coroutines.experimental.*
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.*
+import timber.log.Timber
 import java.io.File
 import kotlin.coroutines.experimental.CoroutineContext
 
@@ -19,15 +17,23 @@ class GuerillaFileProvider(private val client: OkHttpClient, val moshi: Moshi) :
 
     fun uploadFile(file: File): Deferred<FileInfo?> {
         return async {
-            val requestBody = MultipartBody.create(MediaType.parse("image/png"), file)
+            try {
+                val requestBody = MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart(file.name, file.name, RequestBody.create(MediaType.parse("image/jpg"), file))
+                        .build()
 
-            val request = Request.Builder()
-                    .url("http://10.0.2.2:8080/image")
-                    .post(requestBody)
-                    .build()
+                val request = Request.Builder()
+                        .url("http://10.0.2.2:8080/file")
+                        .post(requestBody)
+                        .build()
 
-            val response = client.newCall(request).execute()
-            return@async response.parseItem<FileInfo>(moshi, Types.newParameterizedType(FileInfo::class.java))
+                val response = client.newCall(request).execute()
+                return@async response.parseItem<FileInfo>(moshi, Types.newParameterizedType(FileInfo::class.java))
+            } catch (e: Exception) {
+                Timber.e(e)
+                return@async null
+            }
         }
     }
 }
