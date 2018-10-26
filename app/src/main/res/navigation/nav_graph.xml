@@ -19,6 +19,7 @@
 
         <action
             android:id="@+id/createGuerillaProse"
+            app:launchSingleTop="true"
             app:destination="@id/actionCreateProse"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
@@ -42,6 +43,7 @@
 
         <action
             android:id="@+id/showGuerillaProses"
+            app:launchSingleTop="true"
             app:destination="@id/actionListProse"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim"
