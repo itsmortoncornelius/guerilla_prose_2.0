@@ -18,4 +18,6 @@
     <string name="text_no_data">You don\'t have any Guerilla Prose written yet</string>
     <string name="hint_prose_text">Enter your guerilla prose text</string>
     <string name="text_image_copyright">Copyright by %s</string>
+    <string name="text_update_profile">Update </string>
+    <string name="text_delete_user">Delete</string>
 </resources>
