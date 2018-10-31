@@ -34,8 +34,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     }
 
 
+
     private fun setupNavigation() {
         navController = findNavController(R.id.mainNavigationFragment)
+
         setupActionBarWithNavController(this, navController)
         bottomNavigationView.setupWithNavController(navController)
     }
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             userId?.let {
                 launch {
                     val user = userRepository.getUser(it).await()
-                    when(user) {
+                    when (user) {
                         null -> navController.navigate(R.id.actionCreateProfile)
                         else -> navController.navigate(R.id.actionListProse)
                     }

@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/actionListProse"
+        android:id="@+id/fragmentListProse"
         android:icon="@drawable/ic_view_list"
         android:title="@string/list_guerilla_prose"/>
 

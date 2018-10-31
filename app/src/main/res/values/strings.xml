@@ -20,4 +20,6 @@
     <string name="text_image_copyright">Copyright by %s</string>
     <string name="text_update_profile">Update </string>
     <string name="text_delete_user">Delete</string>
+
+    <string name="success_update_user">Your user has been successfully updated</string>
 </resources>

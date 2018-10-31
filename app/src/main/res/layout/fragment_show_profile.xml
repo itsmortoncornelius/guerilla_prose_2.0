@@ -18,41 +18,56 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/firstNameTextView"
+    <EditText
+        android:id="@+id/firstNameEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/horizontal_margin"
         android:layout_marginEnd="@dimen/horizontal_margin"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/lastNameTextView"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/lastNameEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        app:layout_constraintVertical_chainStyle="packed"/>
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Nino"
+        android:autofillHints=".AUTOFILL_HINT_NAME"
+        tools:targetApi="o"/>
 
-    <TextView
-        android:id="@+id/lastNameTextView"
+    <EditText
+        android:id="@+id/lastNameEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/horizontal_margin"
         android:layout_marginEnd="@dimen/horizontal_margin"
         android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameTextView"/>
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText"
+        tools:text="Handler"
+        android:autofillHints=".AUTOFILL_HINT_NAME"
+        tools:targetApi="o"/>
 
-    <TextView
-        android:id="@+id/emailTextView"
+    <EditText
+        android:id="@+id/emailEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/horizontal_margin"
         android:layout_marginEnd="@dimen/horizontal_margin"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintBottom_toTopOf="@+id/buttonDeleteUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastNameTextView"/>
+        app:layout_constraintTop_toBottomOf="@+id/lastNameEditText"
+        tools:text="ninohandler@gfail.com"
+        android:autofillHints=".AUTOFILL_HINT_NAME"
+        tools:targetApi="o"/>
 
     <Button
         android:id="@+id/buttonUpdateUser"

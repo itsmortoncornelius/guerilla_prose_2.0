@@ -114,8 +114,7 @@ class CreateProseFragment : Fragment(), CoroutineScope {
 
     private fun restartRegistration() {
         Timber.e("No user is set")
-        val navController = view?.findNavController()
-        navController?.navigate(R.id.actionCreateProfile)
+        view?.findNavController()?.navigate(R.id.actionCreateProfile)
     }
 
     private fun createGuerillaProseAndNavigate(guerillaProse: GuerillaProse) = launch {

@@ -3,7 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/actionListProse">
+    app:startDestination="@id/fragmentListProse">
+
+    <action
+        android:id="@+id/actionCreateProfile"
+        app:destination="@id/fragmentCreateProfile"
+        app:launchSingleTop="true"/>
+
+    <navigation
+        android:id="@+id/nav_graph_login"
+        app:startDestination="@id/fragmentCreateProfile">
+
+        <fragment
+            android:id="@+id/fragmentCreateProfile"
+            android:name="de.handler.mobile.guerillaprose.presentation.CreateProfileFragment"
+            android:label="@string/title_create_profile"
+            tools:layout="@layout/fragment_create_profile">
+
+            <action
+                android:id="@+id/actionListProse"
+                app:destination="@id/fragmentListProse"
+                app:launchSingleTop="true"/>
+
+        </fragment>
+
+    </navigation>
+
 
     <fragment
         android:id="@+id/actionShowProfile"
@@ -12,45 +37,22 @@
         tools:layout="@layout/fragment_show_profile"/>
 
     <fragment
-        android:id="@+id/actionListProse"
+        android:id="@+id/fragmentListProse"
         android:name="de.handler.mobile.guerillaprose.presentation.ListProseFragment"
         android:label="@string/title_list"
         tools:layout="@layout/fragment_list_prose">
 
         <action
-            android:id="@+id/createGuerillaProse"
-            app:launchSingleTop="true"
-            app:destination="@id/actionCreateProse"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/actionListProse"/>
+            android:id="@+id/actionCreateProse"
+            app:destination="@id/fragmentCreateProse"
+            app:launchSingleTop="true"/>
 
     </fragment>
 
     <fragment
-        android:id="@+id/actionCreateProse"
+        android:id="@+id/fragmentCreateProse"
         android:name="de.handler.mobile.guerillaprose.presentation.CreateProseFragment"
         android:label="@string/title_create"
         tools:layout="@layout/fragment_create_prose"/>
-
-    <fragment
-        android:id="@+id/actionCreateProfile"
-        android:name="de.handler.mobile.guerillaprose.presentation.CreateProfileFragment"
-        android:label="@string/title_create_profile"
-        tools:layout="@layout/fragment_create_profile">
-
-        <action
-            android:id="@+id/showGuerillaProses"
-            app:launchSingleTop="true"
-            app:destination="@id/actionListProse"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim"
-            app:popUpTo="@+id/actionListProse"/>
-
-    </fragment>
 
 </navigation>

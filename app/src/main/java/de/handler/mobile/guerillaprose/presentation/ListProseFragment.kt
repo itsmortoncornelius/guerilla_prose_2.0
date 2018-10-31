@@ -43,9 +43,8 @@ class ListProseFragment : Fragment() {
             adapter.submitList(it)
         })
 
-        val navController = view.findNavController()
         createGuerillaProseFab.setOnClickListener {
-            navController.navigate(R.id.actionCreateProse)
+            it.findNavController().navigate(R.id.actionCreateProse)
         }
     }
 }

@@ -49,4 +49,36 @@ class UserProvider(val client: OkHttpClient, val moshi: Moshi) : CoroutineScope 
             }
         }
     }
+
+    fun updateUser(user: User): Deferred<User?> {
+        return async {
+            try {
+                val jsonString = moshi.adapter<User>(
+                        Types.newParameterizedType(User::class.java)).toJson(user)
+                Timber.i("JSON String $jsonString")
+                val requestBody = RequestBody.create(
+                        MediaType.parse("application/json"),
+                        jsonString)
+                val request = Request.Builder().url("${BuildConfig.BACKEND_URI}user").put(requestBody).build()
+                val response = client.newCall(request).execute()
+                return@async response.parseItem<User>(moshi, Types.newParameterizedType(User::class.java))
+            } catch (e: Exception) {
+                Timber.e(e)
+                return@async null
+            }
+        }
+    }
+
+    fun deleteUser(id: String): Deferred<User?> {
+        return async {
+            try {
+                val request = Request.Builder().url("${BuildConfig.BACKEND_URI}user?id=$id").delete().build()
+                val response = client.newCall(request).execute()
+                return@async response.parseItem<User>(moshi, Types.newParameterizedType(User::class.java))
+            } catch (e: Exception) {
+                Timber.e(e)
+                return@async null
+            }
+        }
+    }
 }

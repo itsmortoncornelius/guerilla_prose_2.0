@@ -56,6 +56,6 @@ class CreateProfileFragment : Fragment(), CoroutineScope {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
         sharedPreferences.edit().putString(MainActivity.KEY_USER_ID, user?.id).apply()
 
-        navController.navigate(R.id.actionListProse)
+        navController.popBackStack(R.id.fragmentListProse, false)
     }
 }

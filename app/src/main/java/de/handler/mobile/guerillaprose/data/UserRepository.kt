@@ -18,6 +18,21 @@ class UserRepository(private val provider: UserProvider): CoroutineScope {
         }
     }
 
+    fun updateUser(newUser: User): Deferred<User?> {
+        return async {
+            user = provider.updateUser(newUser).await()
+            return@async user
+        }
+    }
+
+    fun deleteUser(id: String): Deferred<User?> {
+        return async {
+            val user = provider.deleteUser(id).await()
+            this@UserRepository.user = null
+            return@async user
+        }
+    }
+
     fun getUser(id: String): Deferred<User?> {
         return async {
             return@async provider.getUser(id).await()
