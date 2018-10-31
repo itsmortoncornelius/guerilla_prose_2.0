@@ -1,7 +1,7 @@
 package de.handler.mobile.guerillaprose.data
 
-import kotlinx.coroutines.experimental.*
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
 class UserRepository(private val provider: UserProvider): CoroutineScope {

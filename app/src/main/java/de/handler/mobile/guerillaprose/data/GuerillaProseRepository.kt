@@ -3,9 +3,9 @@ package de.handler.mobile.guerillaprose.data
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import java.io.File
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 
 class GuerillaProseRepository(private val guerillaProseProvider: GuerillaProseProvider,

@@ -5,12 +5,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.handler.mobile.guerillaprose.BuildConfig
 import de.handler.mobile.guerillaprose.parseItem
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import okhttp3.*
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.File
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 
 class GuerillaFileProvider(private val client: OkHttpClient, val moshi: Moshi) : CoroutineScope {

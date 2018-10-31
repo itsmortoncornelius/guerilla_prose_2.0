@@ -3,11 +3,11 @@ package de.handler.mobile.guerillaprose.data
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.handler.mobile.guerillaprose.parseItem
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import timber.log.Timber
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 
 class FlickrProvider(val client: OkHttpClient, val moshi: Moshi) : CoroutineScope {

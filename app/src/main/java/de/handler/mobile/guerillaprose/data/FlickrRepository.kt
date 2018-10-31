@@ -2,8 +2,8 @@ package de.handler.mobile.guerillaprose.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.experimental.*
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 
 class FlickrRepository(private val provider: FlickrProvider) : CoroutineScope {

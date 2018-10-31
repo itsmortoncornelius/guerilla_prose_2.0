@@ -12,14 +12,14 @@ import de.handler.mobile.guerillaprose.R
 import de.handler.mobile.guerillaprose.data.User
 import de.handler.mobile.guerillaprose.data.UserRepository
 import kotlinx.android.synthetic.main.fragment_show_profile.*
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.Main
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.android.Main
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import timber.log.Timber
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 class ShowProfileFragment : Fragment(), CoroutineScope {
     private val job = Job()

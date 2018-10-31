@@ -4,13 +4,13 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import de.handler.mobile.guerillaprose.BuildConfig
 import de.handler.mobile.guerillaprose.parseItem
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
 import timber.log.Timber
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 
 
 class GuerillaProseProvider(val client: OkHttpClient, val moshi: Moshi) : CoroutineScope {
