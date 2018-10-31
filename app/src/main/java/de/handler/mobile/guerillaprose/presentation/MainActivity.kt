@@ -2,6 +2,7 @@ package de.handler.mobile.guerillaprose.presentation
 
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -33,10 +34,32 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setupUser()
     }
 
+    override fun onBackPressed() {
+        if (invokeBackOrUp()) {
+            super.onBackPressed()
+        }
+    }
 
+    private fun invokeBackOrUp(): Boolean {
+        var invokeBack = true
+        for (fragment in supportFragmentManager.fragments) {
+            for (childFragment in fragment.childFragmentManager.fragments) {
+                if (childFragment is OnBackAwareFragment) {
+                    invokeBack = childFragment.onBackPressed()
+                }
+            }
+        }
+        return invokeBack
+    }
 
     private fun setupNavigation() {
         navController = findNavController(R.id.mainNavigationFragment)
+        navController.addOnNavigatedListener { _, destination ->
+            when (destination.id) {
+                R.id.fragmentCreateProfile -> bottomNavigationView.visibility = View.GONE
+                else -> bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
 
         setupActionBarWithNavController(this, navController)
         bottomNavigationView.setupWithNavController(navController)
@@ -47,21 +70,24 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         val userId = sharedPreferences.getString(KEY_USER_ID, null)
         if (userId.isNullOrEmpty()) {
-            navController.navigate(R.id.actionCreateProfile)
+            navigateToCreateProfile()
         } else {
-            userId?.let {
-                launch {
-                    val user = userRepository.getUser(it).await()
-                    when (user) {
-                        null -> navController.navigate(R.id.actionCreateProfile)
-                        else -> navController.navigate(R.id.actionListProse)
-                    }
+            launch {
+                val user = userRepository.getUser(userId).await()
+                when (user) {
+                    null -> navigateToCreateProfile()
+                    else -> navController.navigate(R.id.actionListProse)
                 }
             }
         }
     }
 
-    override fun onSupportNavigateUp() = navController.navigateUp()
+    override fun onSupportNavigateUp(): Boolean = invokeBackOrUp() && navController.navigateUp()
+
+    private fun navigateToCreateProfile() {
+        navController.navigate(R.id.actionCreateProfile)
+    }
+
 
     companion object {
         const val KEY_USER_ID = "key_user_id"

@@ -6,7 +6,6 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import de.handler.mobile.guerillaprose.R
@@ -22,7 +21,7 @@ import org.koin.android.ext.android.inject
 import kotlin.coroutines.CoroutineContext
 
 
-class CreateProfileFragment : Fragment(), CoroutineScope {
+class CreateProfileFragment : OnBackAwareFragment(), CoroutineScope {
     private val job = Job()
     private val userRepository: UserRepository by inject()
 
@@ -44,6 +43,10 @@ class CreateProfileFragment : Fragment(), CoroutineScope {
         buttonContinueGuest.setOnClickListener {
             createUserAndNavigate(navController)
         }
+    }
+
+    override fun onBackPressed(): Boolean {
+        return userRepository.user != null
     }
 
     private fun createUserAndNavigate(navController: NavController) = launch {

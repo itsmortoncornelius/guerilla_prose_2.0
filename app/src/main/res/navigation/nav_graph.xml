@@ -10,25 +10,18 @@
         app:destination="@id/fragmentCreateProfile"
         app:launchSingleTop="true"/>
 
-    <navigation
-        android:id="@+id/nav_graph_login"
-        app:startDestination="@id/fragmentCreateProfile">
+    <fragment
+        android:id="@+id/fragmentCreateProfile"
+        android:name="de.handler.mobile.guerillaprose.presentation.CreateProfileFragment"
+        android:label="@string/title_create_profile"
+        tools:layout="@layout/fragment_create_profile">
 
-        <fragment
-            android:id="@+id/fragmentCreateProfile"
-            android:name="de.handler.mobile.guerillaprose.presentation.CreateProfileFragment"
-            android:label="@string/title_create_profile"
-            tools:layout="@layout/fragment_create_profile">
+        <action
+            android:id="@+id/actionListProse"
+            app:destination="@id/fragmentListProse"
+            app:launchSingleTop="true"/>
 
-            <action
-                android:id="@+id/actionListProse"
-                app:destination="@id/fragmentListProse"
-                app:launchSingleTop="true"/>
-
-        </fragment>
-
-    </navigation>
-
+    </fragment>
 
     <fragment
         android:id="@+id/actionShowProfile"
