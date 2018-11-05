@@ -10,16 +10,16 @@
         app:destination="@id/fragmentCreateProfile"
         app:launchSingleTop="true"/>
 
+    <action
+        android:id="@+id/actionListProse"
+        app:destination="@id/fragmentListProse"
+        app:launchSingleTop="true"/>
+
     <fragment
         android:id="@+id/fragmentCreateProfile"
         android:name="de.handler.mobile.guerillaprose.presentation.CreateProfileFragment"
         android:label="@string/title_create_profile"
         tools:layout="@layout/fragment_create_profile">
-
-        <action
-            android:id="@+id/actionListProse"
-            app:destination="@id/fragmentListProse"
-            app:launchSingleTop="true"/>
 
     </fragment>
 
