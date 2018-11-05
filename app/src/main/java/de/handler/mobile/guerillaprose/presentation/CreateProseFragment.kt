@@ -195,6 +195,8 @@ class CreateProseFragment : Fragment(), CoroutineScope {
                 REQUEST_CODE_CAMERA -> parseCameraResult()
                 REQUEST_CODE_GALLERY -> parseGalleryResult(data)
             }
+        } else {
+            file = null
         }
     }
 
