@@ -13,7 +13,7 @@ import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 
-class GuerillaFileProvider(private val client: OkHttpClient, val moshi: Moshi) : CoroutineScope {
+class GuerillaFileProvider(private val client: OkHttpClient, private val moshi: Moshi) : CoroutineScope {
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job

@@ -13,7 +13,7 @@ import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 
-class UserProvider(val client: OkHttpClient, val moshi: Moshi) : CoroutineScope {
+class UserProvider(private val client: OkHttpClient, private val moshi: Moshi) : CoroutineScope {
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job

@@ -10,7 +10,7 @@ import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 
-class FlickrProvider(val client: OkHttpClient, val moshi: Moshi) : CoroutineScope {
+class FlickrProvider(private val client: OkHttpClient, private val moshi: Moshi) : CoroutineScope {
     private val baseUrl =
             "https://api.flickr.com/services/rest/" +
                     "?api_key=6ad15c797585b5eb0ca266f9e9cb73ac"

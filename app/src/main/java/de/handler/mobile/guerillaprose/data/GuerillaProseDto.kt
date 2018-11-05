@@ -8,3 +8,12 @@ data class GuerillaProse(
         val userId: String,
         val date: Long? = null
 )
+
+data class User(
+        val firstname: String?,
+        val lastname: String?,
+        val email: String?,
+        val id: String? = null
+)
+
+data class FileInfo(val url: String)

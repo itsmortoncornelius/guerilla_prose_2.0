@@ -4,7 +4,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.provider.MediaStore
-import android.util.Log
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -26,7 +26,7 @@ object FileManager {
             }
             image
         } catch (e: IOException) {
-            Log.e(javaClass.name, e.message)
+            Timber.e(e)
             null
         }
     }
