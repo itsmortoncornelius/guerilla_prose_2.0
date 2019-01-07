@@ -7,7 +7,7 @@
         android:title="@string/list_guerilla_prose"/>
 
     <item
-        android:id="@+id/actionShowProfile"
+        android:id="@+id/fragmentShowProfile"
         android:icon="@drawable/ic_person"
         android:title="@string/profile_guerilla_prose"/>
 

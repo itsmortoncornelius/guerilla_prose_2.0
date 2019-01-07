@@ -24,7 +24,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/actionShowProfile"
+        android:id="@+id/fragmentShowProfile"
         android:name="de.handler.mobile.guerillaprose.presentation.ShowProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_show_profile"/>
