@@ -22,7 +22,13 @@ import androidx.navigation.findNavController
 import com.squareup.picasso.Picasso
 import de.handler.mobile.guerillaprose.BuildConfig
 import de.handler.mobile.guerillaprose.R
-import de.handler.mobile.guerillaprose.data.*
+import de.handler.mobile.guerillaprose.data.FileInfo
+import de.handler.mobile.guerillaprose.data.FileManager
+import de.handler.mobile.guerillaprose.data.FlickrInfo
+import de.handler.mobile.guerillaprose.data.FlickrRepository
+import de.handler.mobile.guerillaprose.data.GuerillaProse
+import de.handler.mobile.guerillaprose.data.GuerillaProseRepository
+import de.handler.mobile.guerillaprose.data.UserRepository
 import de.handler.mobile.guerillaprose.loadUrl
 import kotlinx.android.synthetic.main.fragment_create_prose.*
 import kotlinx.coroutines.CoroutineScope
@@ -48,8 +54,10 @@ class CreateProseFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_create_prose, container, false)
     }
 
@@ -101,11 +109,14 @@ class CreateProseFragment : Fragment(), CoroutineScope {
                 if (user?.id.isNullOrBlank()) {
                     restartRegistration()
                 } else {
-                    createGuerillaProseAndNavigate(GuerillaProse(
+                    createGuerillaProseAndNavigate(
+                        GuerillaProse(
                             text = proseText.text.toString(),
                             imageUrl = fileInfo?.url,
                             label = "street art",
-                            userId = user?.id!!))
+                            userId = user?.id!!
+                        )
+                    )
                 }
             }
         }
@@ -129,12 +140,15 @@ class CreateProseFragment : Fragment(), CoroutineScope {
         if (activity == null) return
 
         if (PermissionManager.permissionPending(
-                        activity!!,
-                        Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                activity!!,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+        ) {
             PermissionManager.requestPermissions(
-                    this,
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    REQUEST_CODE_STORAGE_GALLERY_PERMISSION)
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                REQUEST_CODE_STORAGE_GALLERY_PERMISSION
+            )
         } else {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             if (intent.resolveActivity(activity!!.packageManager) != null) {
@@ -147,21 +161,25 @@ class CreateProseFragment : Fragment(), CoroutineScope {
         if (activity == null) return
 
         if (PermissionManager.permissionPending(
-                        activity!!,
-                        Manifest.permission.CAMERA)) {
+                activity!!,
+                Manifest.permission.CAMERA
+            )
+        ) {
             PermissionManager.requestPermissions(
-                    this,
-                    Manifest.permission.CAMERA,
-                    REQUEST_CODE_CAMERA_PERMISSION)
+                this,
+                Manifest.permission.CAMERA,
+                REQUEST_CODE_CAMERA_PERMISSION
+            )
         } else {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             if (intent.resolveActivity(activity!!.packageManager) != null) {
                 file = FileManager.createFile(activity!!, ".jpg")
                 file?.let {
                     val currentPhotoUri = FileProvider.getUriForFile(
-                            activity!!,
-                            BuildConfig.APPLICATION_ID,
-                            it)
+                        activity!!,
+                        BuildConfig.APPLICATION_ID,
+                        it
+                    )
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, currentPhotoUri)
                     startActivityForResult(intent, REQUEST_CODE_CAMERA)
                 }
@@ -205,18 +223,20 @@ class CreateProseFragment : Fragment(), CoroutineScope {
                 when (granted) {
                     true -> openCamera()
                     else -> PermissionManager.requestPermission(
-                            activity!!,
-                            Manifest.permission.CAMERA,
-                            REQUEST_CODE_CAMERA_PERMISSION)
+                        activity!!,
+                        Manifest.permission.CAMERA,
+                        REQUEST_CODE_CAMERA_PERMISSION
+                    )
                 }
             }
             REQUEST_CODE_STORAGE_GALLERY_PERMISSION -> { granted: Boolean ->
                 when (granted) {
                     true -> openGallery()
                     else -> PermissionManager.requestPermissions(
-                            this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            REQUEST_CODE_STORAGE_GALLERY_PERMISSION)
+                        this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        REQUEST_CODE_STORAGE_GALLERY_PERMISSION
+                    )
                 }
             }
             else -> {
