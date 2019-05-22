@@ -15,6 +15,11 @@
         app:destination="@id/fragmentListProse"
         app:launchSingleTop="true"/>
 
+    <action
+        android:id="@+id/actionCreateProse"
+        app:destination="@id/fragmentCreateProse"
+        app:launchSingleTop="true"/>
+
     <fragment
         android:id="@+id/fragmentCreateProfile"
         android:name="de.handler.mobile.guerillaprose.presentation.CreateProfileFragment"
@@ -38,11 +43,6 @@
         android:name="de.handler.mobile.guerillaprose.presentation.ListProseFragment"
         android:label="@string/title_list"
         tools:layout="@layout/fragment_list_prose">
-
-        <action
-            android:id="@+id/actionCreateProse"
-            app:destination="@id/fragmentCreateProse"
-            app:launchSingleTop="true"/>
 
     </fragment>
 

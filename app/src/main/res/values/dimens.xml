@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="guerilla_card_corner_radius">8dp</dimen>
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_elevation">8dp</dimen>
+    <dimen name="card_height">256dp</dimen>
+
     <dimen name="margin_fab">16dp</dimen>
     <dimen name="margin_title_top">56dp</dimen>
-    <dimen name="horizontal_margin">32dp</dimen>
-    <dimen name="prose_card_height">256dp</dimen>
-    <dimen name="vertical_margin">16dp</dimen>
+    <dimen name="margin_horizontal">32dp</dimen>
+    <dimen name="margin_vertical">16dp</dimen>
     <dimen name="margin_cards">16dp</dimen>
+
 </resources>

@@ -5,83 +5,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.CreateProfileFragment">
+    tools:context=".presentation.ShowProfileFragment">
 
-    <TextView
-        android:id="@+id/titleTextView"
-        style="@style/Base.TextAppearance.AppCompat.Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_title_top"
-        android:text="@string/title_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <EditText
-        android:id="@+id/firstNameEditText"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/firstNameTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/horizontal_margin"
-        android:layout_marginEnd="@dimen/horizontal_margin"
-        android:layout_marginBottom="16dp"
-        android:autofillHints=".AUTOFILL_HINT_NAME"
-        android:gravity="center"
-        android:hint="@string/hint_first_name"
-        android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintBottom_toTopOf="@+id/lastNameEditText"
+        android:layout_marginStart="@dimen/margin_horizontal"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:layout_marginBottom="@dimen/margin_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/lastNameTextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:targetApi="o"
-        tools:text="Nino"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
 
-    <EditText
-        android:id="@+id/lastNameEditText"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/firstNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autofillHints=".AUTOFILL_HINT_NAME"
+            android:gravity="center"
+            android:hint="@string/hint_first_name"
+            android:inputType="textPersonName"
+            tools:targetApi="o"
+            tools:text="Nino"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/lastNameTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/horizontal_margin"
-        android:layout_marginEnd="@dimen/horizontal_margin"
-        android:layout_marginBottom="16dp"
-        android:autofillHints=".AUTOFILL_HINT_NAME"
-        android:gravity="center"
-        android:hint="@string/hint_last_name"
-        android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+        android:layout_marginStart="@dimen/margin_horizontal"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:layout_marginBottom="@dimen/margin_vertical"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText"
-        tools:targetApi="o"
-        tools:text="Handler"/>
+        app:layout_constraintTop_toBottomOf="@+id/firstNameTextInputLayout">
 
-    <EditText
-        android:id="@+id/emailEditText"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lastNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autofillHints=".AUTOFILL_HINT_NAME"
+            android:gravity="center"
+            android:hint="@string/hint_last_name"
+            android:inputType="textPersonName"
+            tools:targetApi="o"
+            tools:text="Handler"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/emailTextInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/horizontal_margin"
-        android:layout_marginEnd="@dimen/horizontal_margin"
-        android:autofillHints=".AUTOFILL_HINT_NAME"
-        android:gravity="center"
-        android:hint="@string/hint_email"
-        android:inputType="textEmailAddress"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        app:layout_constraintBottom_toTopOf="@+id/buttonDeleteUser"
+        android:layout_marginStart="@dimen/margin_horizontal"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:layout_marginBottom="@dimen/margin_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lastNameEditText"
-        tools:targetApi="o"
-        tools:text="ninohandler@gfail.com"/>
+        app:layout_constraintTop_toBottomOf="@+id/lastNameTextInputLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autofillHints=".AUTOFILL_HINT_NAME"
+            android:gravity="center"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            tools:targetApi="o"
+            tools:text="ninohandler@gfail.com"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonUpdateUser"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:layout_marginBottom="@dimen/margin_vertical"
         android:text="@string/text_update_profile"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,11 +100,10 @@
 
     <Button
         android:id="@+id/buttonDeleteUser"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="@dimen/margin_horizontal"
+        android:layout_marginBottom="@dimen/margin_vertical"
         android:text="@string/text_delete_user"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
