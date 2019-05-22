@@ -7,6 +7,7 @@
     <dimen name="margin_fab">16dp</dimen>
     <dimen name="margin_title_top">56dp</dimen>
     <dimen name="margin_horizontal">32dp</dimen>
+    <dimen name="margin_horizontal_small">16dp</dimen>
     <dimen name="margin_vertical">16dp</dimen>
     <dimen name="margin_cards">16dp</dimen>
 

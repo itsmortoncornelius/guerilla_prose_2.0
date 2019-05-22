@@ -60,7 +60,6 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailTextInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_horizontal"
@@ -87,8 +86,8 @@
         android:id="@+id/buttonCreateUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="@dimen/margin_horizontal_small"
+        android:layout_marginBottom="@dimen/margin_vertical"
         android:text="@string/text_create"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -97,8 +96,8 @@
         android:id="@+id/buttonContinueGuest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="@dimen/margin_horizontal_small"
+        android:layout_marginBottom="@dimen/margin_vertical"
         android:text="@string/text_guest"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonCreateUser"/>
