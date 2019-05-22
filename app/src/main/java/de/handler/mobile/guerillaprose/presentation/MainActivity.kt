@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private fun setupNavigation() {
         navController = findNavController(R.id.mainNavigationFragment)
-        navController.addOnNavigatedListener { _, destination ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.fragmentCreateProfile -> bottomNavigationView.visibility = View.GONE
                 else -> bottomNavigationView.visibility = View.VISIBLE
@@ -72,8 +72,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
             navigateToCreateProfile()
         } else {
             launch {
-                val user = userRepository.getUser(userId).await()
-                when (user) {
+                when (userRepository.getUser(userId).await()) {
                     null -> navigateToCreateProfile()
                     else -> navController.navigate(R.id.actionListProse)
                 }
