@@ -6,6 +6,7 @@ import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import de.handler.mobile.guerillaprose.R
@@ -41,6 +42,15 @@ class CreateProfileFragment : OnBackAwareFragment(), CoroutineScope {
         }
         buttonContinueGuest.setOnClickListener {
             createUserAndNavigate(navController)
+        }
+        emailTextInputEditText.setOnEditorActionListener { _, actionId, _ ->
+            return@setOnEditorActionListener when (actionId) {
+                EditorInfo.IME_ACTION_GO -> {
+                    createUserAndNavigate(navController)
+                    true
+                }
+                else -> false
+            }
         }
     }
 
