@@ -3,6 +3,7 @@ package de.handler.mobile.guerillaprose
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.widget.ImageView
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import timber.log.Timber
@@ -16,7 +17,13 @@ fun ImageView.loadUrl(picasso: Picasso, url: String?, width: Int? = null, height
                 override fun onError() {}
 
                 override fun onSuccess() {
-                    onBitmapLoadedAction?.invoke((drawable as? BitmapDrawable)?.bitmap)
+                    val bitmap = (drawable as? BitmapDrawable)?.bitmap
+                    onBitmapLoadedAction?.invoke(bitmap)
+
+                    val drawable = bitmap?.let { RoundedBitmapDrawableFactory.create(resources, it) }
+                    drawable?.cornerRadius = 16F
+                    drawable?.setAntiAlias(true)
+                    setImageDrawable(drawable)
                 }
             })
     }
